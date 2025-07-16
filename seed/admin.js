@@ -1,13 +1,18 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import User from '../models/User.js';
 
-dotenv.config();
+import User from '../models/User.js';
+import { connect } from 'http2';
+import connectDB from '../config/db.js';
+
+
 
 const createAdmin = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    connectDB();
 
     const existingAdmin = await User.findOne({ email: 'admin@example.com' });
     if (existingAdmin) {
@@ -23,6 +28,7 @@ const createAdmin = async () => {
       password: hashedPassword,
       role: 'admin'
     });
+    console.log('ENV:', process.env.MONGO_URI);
 
     console.log('Admin user created');
     process.exit();

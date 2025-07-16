@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+import { strict } from "assert";
+import mongoose from "mongoose"; 
+import { type } from "os";
 
 const productSchema = new mongoose.Schema({
   title: {
@@ -29,7 +31,12 @@ const productSchema = new mongoose.Schema({
       url: String,
       public_id: String
     }
-  ]
+  ],
+  brand:{
+    type: String,
+  }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Product', productSchema);
+const Product = mongoose.model('Product', productSchema);
+
+export default Product;
