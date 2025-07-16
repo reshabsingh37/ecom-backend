@@ -7,6 +7,8 @@ import session from 'cookie-session';
 import passport from 'passport';
 
 import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+
 
 
 // import errorHandler from './middlewares/errorHandler.js';
@@ -31,7 +33,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-
+app.use('/api/products', productRoutes);
 
 // Error handler
 // app.use(errorHandler);
