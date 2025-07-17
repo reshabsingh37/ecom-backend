@@ -9,6 +9,7 @@ import passport from 'passport';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 
 
 // import errorHandler from './middlewares/errorHandler.js';
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/checkout', paymentRoutes);
 
 // Error handler
 // app.use(errorHandler);
