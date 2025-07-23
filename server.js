@@ -5,6 +5,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'cookie-session';
 import passport from 'passport';
+import './config/passport.js'; // Passport config
+import authMiddleware from './middlewares/authMiddleware.js';
+
 
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
@@ -14,7 +17,6 @@ import paymentRoutes from './routes/paymentRoutes.js';
 
 // import errorHandler from './middlewares/errorHandler.js';
 import connectDB from './config/db.js';
-// import './config/passport.js'; // Passport config
 
 dotenv.config();
 connectDB();
@@ -31,6 +33,8 @@ app.use(express.json());
 // }));
 // app.use(passport.initialize());
 // app.use(passport.session());
+ // Your new passport config file
+app.use(passport.initialize());
 
 // Routes
 app.use('/api/auth', authRoutes);

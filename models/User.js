@@ -15,8 +15,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
-    minlength: 6
   },
   isGoogleUser: {
     type: Boolean,
@@ -26,6 +24,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
+  },
+  googleId: { 
+    type: String 
   }
 }, { timestamps: true });
 

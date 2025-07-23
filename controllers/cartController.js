@@ -18,6 +18,11 @@ export const addToCart = async (req, res) => {
   try {
     const product = await Product.findById(productId);
     if (!product) return res.status(404).json({ message: 'Product not found' });
+    if (product.stock < quantity) {
+      return res.status(400).json({ message: 'Not enough stock available' });
+    }
+    product.stock -= quantity;
+    await product.save();
 
     let cart = await Cart.findOne({ user: req.user._id });
     if (!cart) {
@@ -29,8 +34,10 @@ export const addToCart = async (req, res) => {
       const itemIndex = cart.items.findIndex(i => i.product.toString() === productId);
       if (itemIndex > -1) {
         cart.items[itemIndex].quantity += quantity;
+        cart.markModified('items');
       } else {
         cart.items.push({ product: productId, quantity });
+        cart.markModified('items');
       }
       await cart.save();
     }
