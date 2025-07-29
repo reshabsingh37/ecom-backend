@@ -20,26 +20,20 @@ export const createCheckoutSession = async (req, res) => {
 
   try {
     // --- FIX: Access properties directly from the 'item' object ---
-    const line_items = cartItems.map(item => {
-      // Add a check to ensure item and price are valid
-      if (!item || typeof item.price !== 'number') {
-        throw new Error('Invalid item in cart.');
-      }
-      return {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            // Use item.title (or item.name, depending on your Product model)
-            name: item.title, 
-            // You can also pass images
-            images: item.images && item.images.length > 0 ? [item.images[0]] : [],
-          },
-          // Use item.price directly
-          unit_amount: Math.round(item.price * 100), // Price must be in cents
+    const line_items = cartItems.map(item => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          // Use item.title (or item.name, depending on your Product model)
+          name: item.title, 
+          // You can also pass images
+          // images: Array.isArray(item.images) ? item.images : [], // Should be array of strings
         },
-        quantity: item.quantity,
-      };
-    });
+        // Use item.price directly
+        unit_amount: Math.round(item.price * 100), // Price must be in cents
+      },
+      quantity: item.quantity,
+    }));
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
