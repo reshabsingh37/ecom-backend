@@ -21,8 +21,7 @@ export const addToCart = async (req, res) => {
     if (product.stock < quantity) {
       return res.status(400).json({ message: 'Not enough stock available' });
     }
-    product.stock -= quantity;
-    await product.save();
+    
 
     let cart = await Cart.findOne({ user: req.user._id });
     if (!cart) {
