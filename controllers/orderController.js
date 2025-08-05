@@ -8,15 +8,15 @@ export const getUserOrders = async (req, res) => {
       .populate('products.product')
       .sort({ createdAt: -1 });
 
-    if (orders.length === 0) {
+    // if (orders.length === 0) {
 
-      const newOrder = await Order.create({
-        user: req.user._id,
-        products: [], 
-        // orderStatus: 'pending'
-      });
-      orders = [newOrder];
-    }
+    //   const newOrder = await Order.create({
+    //     user: req.user._id,
+    //     products: [], 
+    //     // orderStatus: 'pending'
+    //   });
+    //   orders = [newOrder];
+    // }
 
     res.status(200).json(orders);
   } catch (error) {
