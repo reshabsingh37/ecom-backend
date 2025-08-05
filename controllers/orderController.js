@@ -45,6 +45,10 @@ export const createOrderAfterPayment = async (req, res) => {
       paymentStatus: "paid",
       orderStatus: "processing"
     });
+
+    product.stock -= quantity;
+    await product.save();
+    
     // Clear the cart
     cart.items = [];
     await cart.save();
