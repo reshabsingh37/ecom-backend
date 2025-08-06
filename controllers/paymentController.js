@@ -40,8 +40,8 @@ export const createCheckoutSession = async (req, res) => {
       line_items,
       mode: 'payment',
       // Ensure your .env file has CLIENT_URL set correctly (e.g., http://localhost:5173)
-      success_url: `${process.env.CLIENT_URL}/order/success`,
-      cancel_url: `${process.env.CLIENT_URL}/order/cancel`,
+      success_url: `${process.env.CLIENT_URL}?payment_success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_URL}?payment_canceled=true`,
       // This relies on your auth middleware providing req.user
       customer_email: req.user.email, 
     });
