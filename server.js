@@ -1,11 +1,10 @@
-// backend/server.js
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'cookie-session';
 import passport from 'passport';
-import './config/passport.js'; // Passport config
+import './config/passport.js'; 
 import authMiddleware from './middlewares/authMiddleware.js';
 import verifyToken from './middlewares/authMiddleware.js';
 
@@ -23,8 +22,17 @@ connectDB();
 
 const app = express();
 
+const corsOptions = {
+
+  origin: 'https://6a1cd64aa764.ngrok-free.app',
+  optionsSuccessStatus: 200 
+};
+
+app.use(cors(corsOptions));
+
+
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 
 app.use(passport.initialize());
