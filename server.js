@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'cookie-session';
 import passport from 'passport';
-import './config/passport.js'; 
+import './config/passport.js'; // Passport config
 import authMiddleware from './middlewares/authMiddleware.js';
 import verifyToken from './middlewares/authMiddleware.js';
 
@@ -22,15 +22,26 @@ connectDB();
 
 const app = express();
 
-const corsOptions = {
 
-  origin: 'https://6a1cd64aa764.ngrok-free.app',
-  optionsSuccessStatus: 200 
+const allowedOrigins = [
+  'https://6a1cd64aa764.ngrok-free.app', 
+  'http://localhost:8000',             
+
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
 };
 
 app.use(cors(corsOptions));
-
-
 
 // Middleware
 app.use(express.json());
